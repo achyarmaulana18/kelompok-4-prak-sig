@@ -26,14 +26,14 @@
         <div class="m-2">
             <table class="table table-striped table-striped table-bordered" id="sensor">
                 <thead>
-                    <tr align="center" >
-                            <th>Lokasi</th>
-                            <th>Kelas</th>
-                            <th>Suhu</th>
-                            <th>Kelembaban</th>
-                            <th>Latitude</th>
-                            <th>Longitude</th>
-                            <th>Terakhir diperbaharui</th>
+                    <tr align="center">
+                        <th>Lokasi</th>
+                        <th>Kelas</th>
+                        <th>Suhu</th>
+                        <th>Kelembaban</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
+                        <th>Terakhir diperbaharui</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,10 +44,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
         integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
-        </script>
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
-        </script>
+    </script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
@@ -57,13 +57,13 @@
 
         // Your web app's Firebase configuration
         const firebaseConfig = {
-            apiKey: "AIzaSyDf0bYRqPK8Sb1Fjpr8x45pqLT7JNXbLwc",
-            authDomain: "praktikumsig-2b4b1.firebaseapp.com",
-            databaseURL: "https://praktikumsig-2b4b1-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "praktikumsig-2b4b1",
-            storageBucket: "praktikumsig-2b4b1.appspot.com",
-            messagingSenderId: "836740190661",
-            appId: "1:836740190661:web:3a2014a90319b60cc6bbac"
+        apiKey: "AIzaSyDf0bYRqPK8Sb1Fjpr8x45pqLT7JNXbLwc",
+        authDomain: "praktikumsig-2b4b1.firebaseapp.com",
+        databaseURL: "https://praktikumsig-2b4b1-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "praktikumsig-2b4b1",
+        storageBucket: "praktikumsig-2b4b1.appspot.com",
+        messagingSenderId: "836740190661",
+        appId: "1:836740190661:web:3a2014a90319b60cc6bbac"
         };
 
         // Initialize Firebase
@@ -86,7 +86,7 @@
 
         // Get a reference to the database service
         const db = getDatabase(app);
-        const sensorRef = ref(db, 'WEBGIS');
+        const sensorRef = ref(db, 'WEBGIS/Kelompok13');
 
         // add marker from realtime iot devices
         function addToMap(data) {
