@@ -11,14 +11,12 @@
         - DHT_sensor_library
         - ArduinoJson 5.13.5
         - NTPClient 3.2.0
-
         Jika library tidak ada pada pencarian,
         Anda bisa download dari link Github.
         - FirebaseArduino
         https://github.com/FirebaseExtended/firebase-arduino
         - TinyGPS++
          https://github.com/mikalhart/TinyGPSPlus/releases
-
     3.  Driver USB to NodeMCU
         - CH341 : http://www.wch-ic.com/downloads/CH341SER_EXE.html atau
         - CP210 : https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers
@@ -30,8 +28,8 @@
 //GPS
 #include <TinyGPS++.h>
 #include <SoftwareSerial.h>
-int RXPin = D1;
-int TXPin = D2;
+int RXPin = D2;
+int TXPin = D3;
 SoftwareSerial gpsSerial(RXPin, TXPin);
 TinyGPSPlus gps;
 float latitude, longitude;
@@ -39,17 +37,18 @@ String lat_str, lng_str;
 
 //WIFI
 #include <ESP8266WiFi.h>
-#define WIFI_SSID "DESKTOP-6IDBF47" // ganti dan sesuaikan dengan nama wifi
-#define WIFI_PASSWORD "12345678" // ganti dan sesuaikan dengan password wifi
+#define WIFI_SSID "Dopamine" // ganti dan sesuaikan dengan nama wifi
+#define WIFI_PASSWORD "dopamine40" // ganti dan sesuaikan dengan password wifi
 
 //FIREBASE
 #include <FirebaseArduino.h>
 #define FIREBASE_HOST "praktikumsig-2b4b1-default-rtdb.asia-southeast1.firebasedatabase.app" // ganti dan sesuaikan dengan firebase
 #define FIREBASE_AUTH "JUug0cVkgi3uav97fPZd3FKnIr9RBrIlABddj9ZN" // ganti dengan key firebase
 
+
 //DHT11
 #include <DHT.h>
-#define DHTPIN D3
+#define DHTPIN D1
 #define DHTTYPE DHT11
 DHT dht(DHTPIN, DHTTYPE);
 int suhu, kelembaban;
@@ -85,8 +84,8 @@ void setup() {
   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
 
   //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
-  Firebase.setString("WEBGIS/Kelompok2/nama", "2 - GISTEAM"); // Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "20 - Kelompok 2"
-  Firebase.setString("WEBGIS/Kelompok2/kelas", "ABCD"); // Sesuaikan Kelompok dengan nomer alat dan Kelas Praktikum Asal
+  Firebase.setString("WEBGIS/Kelompok13/nama", "4 - Team Achyar"); // Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "20 - Kelompok 2"
+  Firebase.setString("WEBGIS/Kelompok13/kelas", "C"); // Sesuaikan Kelompok dengan nomer alat dan Kelas Praktikum Asal
 }
 
 void loop()
@@ -117,8 +116,8 @@ void loop()
         longitude = gps.location.lng();
         lng_str = String(longitude , 10);
       }
-      Firebase.setString("WEBGIS/Kelompok2/latitude", lat_str);  //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
-      Firebase.setString("WEBGIS/Kelompok2/longitude", lng_str);   //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
+      Firebase.setString("WEBGIS/Kelompok13/latitude", lat_str);  //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
+      Firebase.setString("WEBGIS/Kelompok13/longitude", lng_str);   //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
     }
   }
 
@@ -144,9 +143,9 @@ void loop()
     return;
   }
 
-  Firebase.setFloat("WEBGIS/Kelompok2/suhu", suhu);   //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
-  Firebase.setFloat("WEBGIS/Kelompok2/kelembaban", kelembaban);   //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
-  Firebase.setString("WEBGIS/Kelompok2/diperbaharui", waktu_terkini);   //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
+  Firebase.setFloat("WEBGIS/Kelompok13/suhu", suhu);   //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
+  Firebase.setFloat("WEBGIS/Kelompok13/kelembaban", kelembaban);   //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
+  Firebase.setString("WEBGIS/Kelompok13/diperbaharui", waktu_terkini);   //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
 
   delay(2000);
 }
