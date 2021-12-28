@@ -12,44 +12,67 @@
     <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" rel="stylesheet"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin="" />
-        <style>
-            .card-img {
-                position: relative;
-            }
-       
-            </style>
-        
+    <style>
+        .card-img {
+            position: relative;
+        }
+    </style>
+
 </head>
 
 <body>
 
-      <div class="card" style="width: 100%;">
-        <div class="card-header text-success">
-            Kelompok 4 Praktikum SIG (Sistem Informasi Geografis)
-        </div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">1. M. Alif Alharits</li>
-          <li class="list-group-item">2. Muhamad Alvin Alzali</li>
-          <li class="list-group-item">3. Muhammad Achyar Maulana</li>
-          <li class="list-group-item">4. Hana Setiawan</li>
-          <li class="list-group-item">5. Muchammad Amru Al-Chakim</li>
-          <li class="list-group-item">6. Bena Syahbana</li>
-        </ul>
-      </div>
+
 
     <div class="container py-4">
+        <div class="card" style="width: 100%;">
+            <div class="card-header text-success" style="text-align: center; font-size: 25pt;">
+                Kelompok 4 Praktikum SIG (Sistem Informasi Geografis)
+            </div>
+	    <div class="row align-items-start">
+    <div class="col">
+       <ul class="list-group list-group-flush">
+                <li class="list-group-item">1. M. Alif Alharits</li>
+                <li class="list-group-item">2. Muhamad Alvin Alzali</li>
+                <li class="list-group-item">3. Muhammad Achyar Maulana</li>
+                <li class="list-group-item">4. Hana Setiawan</li>
+                <li class="list-group-item">5. Bena Syahban</li>
+                <li class="list-group-item">6. Muchammad Amru Al-Chakim</li>
+            </ul>
+	    
+    </div>
+    <div class="col">
+       <ul class="list-group list-group-flush">
+                <li class="list-group-item">065119120</li>
+                <li class="list-group-item">065119134</li>
+                <li class="list-group-item">065119151</li>
+                <li class="list-group-item">065119156</li>
+                <li class="list-group-item">065119161</li>
+                <li class="list-group-item">065119167</li>
+            </ul>
+	    
+    </div>
+  </div>
+           
+        </div>
         <header class="pb-3 mb-4 border-bottom">
-            <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-                <span class="shadow-sm p-3 mb-5 bg-body rounded fs-4 text-primary">Sensor Suhu dan Kelembaban - Web GIS IoT </span>
+            <a class="d-flex align-items-center text-dark text-decoration-none">
+                <span class="shadow-sm p-3 mb-5 bg-body rounded fs-4 text-primary"
+                    style="text-align: center;margin-bottom: 0!important;margin-top: 60px;">SEBARAN TITIK STASIUN PENGISIAN BAHAN
+                    BAKAR UMUM (SPBU) DI KOTA BOGOR, SERTA MONITORING SUHU, KELEMBABAN PADA WILAYAH TERTENTU</span>
             </a>
         </header>
 
-        <div id="map" style="height: 600px;" ></div>
+        <div id="map" style="height: 600px;"></div>
         <div class="m-2">
             <table class="table table-striped table-striped table-bordered" id="sensor">
                 <thead>
-                    <tr align="center">
+                    <tr align="center" class="table-info">
                         <th>Nama</th>
+                        <th>Suhu</th>
+                        <th>Kelembaban</th>
+                        <th>Latitude</th>
+                        <th>Longitude</th>
                         <th>Kecamatan</th>
                         <th>Alamat</th>
                     </tr>
@@ -74,7 +97,6 @@
         import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-database.js";
 
         // Your web app's Firebase configuration
-
         const firebaseConfig= {
             apiKey: "AIzaSyDY8jGziCmh9fJkc2Nvxusw7GkuqdgcquM",
             authDomain: "gisiotachyar-ce4ca.firebaseapp.com",
@@ -112,7 +134,9 @@
         function addToMap(data) {
             L.marker([data.latitude, data.longitude])
                 .addTo(map)
-                .bindPopup(`<b>${data.nama}</b><br>Kecamatan:<br>${data.kecamatan}<br>Alamat: ${data.alamat}`);
+                .bindPopup(`<b>${data.nama}</b><br>Suhu
+                : ${data.suhu}&#8451<br>Kelembaban: ${data.kelembaban}%<br>Latitude: ${data.latitude}<br>Longitude: ${data.longitude}<br>Kecamatan: ${data.kecamatan}<br>Alamat:
+                ${data.alamat}`);
         }
         
         function addToTable(data) {
@@ -121,6 +145,10 @@
             row.setAttribute("nama", data.nama);
             row.innerHTML = `
                 <td align="center" >${data.nama}</td>
+                <td align="center" >${data.suhu}&#8451</td>
+                <td align="center" >${data.kelembaban}%</td>
+                <td align="center" >${data.latitude}</td>
+                <td align="center" >${data.longitude}</td>
                 <td align="center" >${data.kecamatan}</td>
                 <td align="center" >${data.alamat}</td>
             `;
