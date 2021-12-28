@@ -12,28 +12,42 @@
     <link href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" rel="stylesheet"
         integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
         crossorigin="" />
+        <style>
+            .card-img {
+                position: relative;
+            }
+            h5 {
+        text-align: center;
+        font-weight: bold;
+        color: #393E46;
+        font-size: 20px;
+    }
+            </style>
+        
 </head>
 
 <body>
+    <div class="card">
+        <div class="card-body d-inline p-2 bg-dark text-white">
+          Kelompok 4 Praktikum SIG (Sistem Informasi Geografis)
+        </div>
+      </div>
+
     <div class="container py-4">
         <header class="pb-3 mb-4 border-bottom">
             <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-                <span class="fs-4">Sensor Suhu dan Kelembaban - Web GIS IoT - Kelompok 4 Prak SIG</span>
+                <span class="shadow-sm p-3 mb-5 bg-body rounded fs-4 text-primary">Sensor Suhu dan Kelembaban - Web GIS IoT </span>
             </a>
         </header>
 
-        <div id="map" style="height: 600px;"></div>
+        <div id="map" style="height: 600px;" ></div>
         <div class="m-2">
             <table class="table table-striped table-striped table-bordered" id="sensor">
                 <thead>
-                    <tr align="center" >
-                            <th>Lokasi</th>
-                            <th>Kelas</th>
-                            <th>Suhu</th>
-                            <th>Kelembaban</th>
-                            <th>Latitude</th>
-                            <th>Longitude</th>
-                            <th>Terakhir diperbaharui</th>
+                    <tr align="center">
+                        <th>Nama</th>
+                        <th>Kecamatan</th>
+                        <th>Alamat</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,10 +58,10 @@
 
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"
         integrity="sha384-7+zCNj/IqJ95wo16oMtfsKbZ9ccEh31eOz1HGyDuCQ6wgnyJNSYdrPa03rtR1zdB" crossorigin="anonymous">
-        </script>
+    </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.min.js"
         integrity="sha384-QJHtvGhmr9XOIpI6YVutG+2QOK9T+ZnN4kzFN1RtK3zEFEIsxhlmWl5/YESvpZ13" crossorigin="anonymous">
-        </script>
+    </script>
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
         integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
         crossorigin=""></script>
@@ -56,19 +70,21 @@
         import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/9.2.0/firebase-database.js";
 
         // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyDf0bYRqPK8Sb1Fjpr8x45pqLT7JNXbLwc",
-            authDomain: "praktikumsig-2b4b1.firebaseapp.com",
-            databaseURL: "https://praktikumsig-2b4b1-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "praktikumsig-2b4b1",
-            storageBucket: "praktikumsig-2b4b1.appspot.com",
-            messagingSenderId: "836740190661",
-            appId: "1:836740190661:web:3a2014a90319b60cc6bbac"
+
+        const firebaseConfig= {
+            apiKey: "AIzaSyDY8jGziCmh9fJkc2Nvxusw7GkuqdgcquM",
+            authDomain: "gisiotachyar-ce4ca.firebaseapp.com",
+            databaseURL: "https://gisiotachyar-ce4ca-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "gisiotachyar-ce4ca",
+            storageBucket: "gisiotachyar-ce4ca.appspot.com",
+            messagingSenderId: "371960312538",
+            appId: "1:371960312538:web:d73293f09f0137f2162be3",
+            measurementId: "G-MHPKXGQR2Z"
         };
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
-
+        
         // create map
         const map = L.map('map').setView([-6.6061381, 106.801851], 12);
 
@@ -87,26 +103,22 @@
         // Get a reference to the database service
         const db = getDatabase(app);
         const sensorRef = ref(db, 'WEBGIS');
-
+        
         // add marker from realtime iot devices
         function addToMap(data) {
             L.marker([data.latitude, data.longitude])
                 .addTo(map)
-                .bindPopup(`<b>${data.nama} - ${data.kelas}</b><br>Suhu: ${data.suhu}<br>Kelembaban: ${data.kelembaban}<br>Terakhir Diperbaharui:<br>${data.diperbaharui}`);
+                .bindPopup(`<b>${data.nama}</b><br>Kecamatan:<br>${data.kecamatan}<br>Alamat: ${data.alamat}`);
         }
-
+        
         function addToTable(data) {
             const findRow = document.querySelector(`tr[nama="${data.nama}"]`);
             const row = findRow ?? document.createElement('tr');
             row.setAttribute("nama", data.nama);
             row.innerHTML = `
                 <td align="center" >${data.nama}</td>
-                <td align="center" >${data.kelas}</td>
-                <td align="center" >${data.suhu}</td>
-                <td align="center" >${data.kelembaban}</td>
-                <td align="center" >${data.latitude}</td>
-                <td align="center" >${data.longitude}</td>
-                <td align="center" >${data.diperbaharui}</td>
+                <td align="center" >${data.kecamatan}</td>
+                <td align="center" >${data.alamat}</td>
             `;
 
             if (!findRow) {
