@@ -42,8 +42,8 @@ String lat_str, lng_str;
 
 //FIREBASE
 #include <FirebaseArduino.h>
-#define FIREBASE_HOST "praktikumsig-2b4b1-default-rtdb.asia-southeast1.firebasedatabase.app" // ganti dan sesuaikan dengan firebase
-#define FIREBASE_AUTH "JUug0cVkgi3uav97fPZd3FKnIr9RBrIlABddj9ZN" // ganti dengan key firebase
+#define FIREBASE_HOST "gisiotachyar-ce4ca-default-rtdb.asia-southeast1.firebasedatabase.app" // ganti dan sesuaikan dengan firebase
+#define FIREBASE_AUTH "ULCP1ntmK0CTwMdMDL91auQJq0mkAJC4H8VFIpf5" // ganti dengan key firebase
 
 
 //DHT11
@@ -84,8 +84,9 @@ void setup() {
   Firebase.begin(FIREBASE_HOST, FIREBASE_AUTH);
 
   //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
-  Firebase.setString("WEBGIS/Kelompok13/nama", "4 - Team Achyar"); // Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "20 - Kelompok 2"
-  Firebase.setString("WEBGIS/Kelompok13/kelas", "C"); // Sesuaikan Kelompok dengan nomer alat dan Kelas Praktikum Asal
+  Firebase.setString("WEBGIS/Home/nama", "4 - Team Achyar - Kelas C"); // nama kelompok
+  Firebase.setString("WEBGIS/Home/kecamatan", "Bogor Selatan"); // lokasi kecamatan kelompok
+  Firebase.setString("WEBGIS/Home/alamat", "secret"); // alamat lokasi alat
 }
 
 void loop()
@@ -116,8 +117,8 @@ void loop()
         longitude = gps.location.lng();
         lng_str = String(longitude , 10);
       }
-      Firebase.setString("WEBGIS/Kelompok13/latitude", lat_str);  //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
-      Firebase.setString("WEBGIS/Kelompok13/longitude", lng_str);   //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
+      Firebase.setString("WEBGIS/Home/latitude", lat_str);  //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
+      Firebase.setString("WEBGIS/Home/longitude", lng_str);   //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
     }
   }
 
@@ -143,9 +144,7 @@ void loop()
     return;
   }
 
-  Firebase.setFloat("WEBGIS/Kelompok13/suhu", suhu);   //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
-  Firebase.setFloat("WEBGIS/Kelompok13/kelembaban", kelembaban);   //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
-  Firebase.setString("WEBGIS/Kelompok13/diperbaharui", waktu_terkini);   //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
-
+  Firebase.setFloat("WEBGIS/Home/suhu", suhu);   //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
+  Firebase.setFloat("WEBGIS/Home/kelembaban", kelembaban);   //Sesuaikan Kelompok dengan nomer alat - cth : alat nomer 20 berarti "WEBGIS/Kelompok20/nama" berlaku untuk semuanya yang Firebase.set....
   delay(2000);
 }
